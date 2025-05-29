@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      
 env:
   PJ_NAME: 'TestLib/TestLib.csproj'
   
