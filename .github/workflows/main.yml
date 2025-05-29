@@ -6,7 +6,7 @@ on:
       - main
       
 env:
-  PJ_NAME: 'TestLib/TestLib.csproj'
+  PJ_NAME: TestLib/TestLib.csproj
   
 jobs:
   build-and-publish:
