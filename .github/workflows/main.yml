@@ -45,6 +45,10 @@ jobs:
           </configuration>
           "@
           $nugetConfig | Out-File -FilePath NuGet.config -Encoding utf8
+          
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
 
       - name: Push to GitHub Packages
         run: nuget push "*.nupkg" -Source "github"
