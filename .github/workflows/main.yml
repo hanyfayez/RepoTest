@@ -20,13 +20,13 @@ jobs:
         uses: NuGet/setup-nuget@v1
 
       - name: Restore NuGet packages
-        run: nuget restore ${{ PJ_NAME }}
+        run: nuget restore TestLib/TestLib.csproj
 
       - name: Build the project
-        run: msbuild ${{ PJ_NAME }} /p:Configuration=Release
+        run: msbuild TestLib/TestLib.csproj /p:Configuration=Release
 
       - name: Pack the library
-        run: nuget pack ${{ PJ_NAME }} -Prop Configuration=Release
+        run: nuget pack TestLib/TestLib.csproj -Prop Configuration=Release
 
       - name: Publish to GitHub Packages
         run: nuget push "*.nupkg" -Source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -ApiKey ${{ secrets.GITHUB_TOKEN }}
