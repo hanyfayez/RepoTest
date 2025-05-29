@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace TestLib
 {
-    public class TestClass
+    internal class Class1
     {
-        public static void Ciao()
+        public Class1()
         {
-            Console.WriteLine("Ciao from TestLib!");
+            TestLib.TestClass.Ciao();
         }
-
-
     }
 }
