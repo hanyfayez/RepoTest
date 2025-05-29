@@ -28,25 +28,26 @@ jobs:
       - name: Pack the library
         run: nuget pack TestLib/TestLib.csproj -Prop Configuration=Release
 
-      - name: Create NuGet.config with GitHub credentials
-        run: | 
-          Add-Content -Path NuGet.config -Value @"
-            <?xml version="1.0" encoding="utf-8"?>
-            <configuration>
-              <packageSources>
-                <add key="github" value="https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" />
-              </packageSources>
-              <packageSourceCredentials>
-                <github>
-                  <add key="Username" value="${{ github.repository_owner }}" />
-                  <add key="ClearTextPassword" value="${{ secrets.GITHUB_TOKEN }}" />
-                </github>
-              </packageSourceCredentials>
-            </configuration>
-            "@
+      - name: Create NuGet.config for GitHub Packages
+        run: |
+          $nugetConfig = @"
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <add key="github" value="https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" />
+            </packageSources>
+            <packageSourceCredentials>
+              <github>
+                <add key="Username" value="${{ github.repository_owner }}" />
+                <add key="ClearTextPassword" value="${{ secrets.GITHUB_TOKEN }}" />
+              </github>
+            </packageSourceCredentials>
+          </configuration>
+          "@
+          $nugetConfig | Out-File -FilePath NuGet.config -Encoding utf8
 
-      - name: Push package to GitHub Packages
-        run: nuget push "*.nupkg" -Source github -ConfigFile NuGet.config
+      - name: Push to GitHub Packages
+        run: nuget push "*.nupkg" -Source "github"
 
       #- name: Publish to GitHub Packages
       #  run: nuget push "*.nupkg" -Source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -ApiKey ${{ secrets.GITHUB_TOKEN }}
