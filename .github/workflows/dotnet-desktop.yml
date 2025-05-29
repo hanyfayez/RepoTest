@@ -1,0 +1,67 @@
+name: New BUILD -- Auto Versioning & Git TAG
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3.1
+
+      - name: Restore dependencies
+        run: nuget restore TestLib.sln
+
+      # 🔢 Calcola versione automatica (es: 1.0.0+123)
+      - name: Set version variable
+        id: vars
+        run: echo "VERSION=1.0.${{ github.run_number }}" >> $env:GITHUB_ENV
+
+      - name: Build solution
+        run: msbuild TestLib.sln /p:Configuration=Release /p:Version=${{ env.VERSION }}
+
+      - name: Pack NuGet package
+        run: nuget pack TestLib\TestLib.csproj -Prop Configuration=Release -Version ${{ env.VERSION }}
+
+      - name: Create NuGet.config for GitHub Packages
+        run: |
+          $nugetConfig = @"
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <add key="github" value="https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" />
+            </packageSources>
+            <packageSourceCredentials>
+              <github>
+                <add key="Username" value="${{ github.repository_owner }}" />
+                <add key="ClearTextPassword" value="${{ secrets.GITHUB_TOKEN }}" />
+              </github>
+            </packageSourceCredentials>
+          </configuration>
+          "@
+          $nugetConfig | Out-File -FilePath NuGet.config -Encoding utf8
+          
+      #- name: List files in the repository
+      #  run: |
+      #    ls ${{ github.workspace }}
+
+      - name: Push to GitHub Packages
+        run: nuget push "*.nupkg" -Source "github"
+
+      # (Facoltativo) Crea un Git tag
+      - name: Create Git tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag v${{ env.VERSION }}
+          git push origin v${{ env.VERSION }}
