@@ -29,4 +29,5 @@ jobs:
         run: nuget pack TestLib/TestLib.csproj -Prop Configuration=Release
 
       - name: Publish to GitHub Packages
-        run: nuget push "*.nupkg" -Source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -ApiKey ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push *.nupkg --source "https://nuget.pkg.github.com/hanyfayez/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
+#        run: nuget push "*.nupkg" -Source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -ApiKey ${{ secrets.GITHUB_TOKEN }}
