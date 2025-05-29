@@ -20,10 +20,10 @@ jobs:
         uses: NuGet/setup-nuget@v1
 
       - name: Restore NuGet packages
-        run: nuget restore TestLib/TestLib.csproj
+        run: nuget restore TestLib.sln
 
       - name: Build the project
-        run: msbuild TestLib/TestLib.csproj /p:Configuration=Release
+        run: msbuild TestLib.sln /p:Configuration=Release
 
       - name: Pack the library
         run: nuget pack TestLib/TestLib.csproj -Prop Configuration=Release
