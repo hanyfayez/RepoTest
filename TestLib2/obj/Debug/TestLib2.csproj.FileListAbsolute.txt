@@ -1,0 +1,6 @@
+C:\Users\hanyf\Desktop\RepoTest\Test_SecondLib\bin\Debug\Test_SecondLib.dll
+C:\Users\hanyf\Desktop\RepoTest\Test_SecondLib\bin\Debug\Test_SecondLib.pdb
+C:\Users\hanyf\Desktop\RepoTest\Test_SecondLib\obj\Debug\TestLib2.csproj.AssemblyReference.cache
+C:\Users\hanyf\Desktop\RepoTest\Test_SecondLib\obj\Debug\TestLib2.csproj.CoreCompileInputs.cache
+C:\Users\hanyf\Desktop\RepoTest\Test_SecondLib\obj\Debug\Test_SecondLib.dll
+C:\Users\hanyf\Desktop\RepoTest\Test_SecondLib\obj\Debug\Test_SecondLib.pdb
