@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>HFTestLib2</id>
+    <version>1.0.0</version>
+    <title>HFTestLib2</title>
+    <authors>HF</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>HFTestLib2 description</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>HF TestLib2</copyright>
+    <repository type="git" url="https://github.com/hanyfayez/RepoTest" />
+    <tags>HFSecondLib</tags>
+  </metadata>
+</package>
