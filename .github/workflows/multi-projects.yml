@@ -1,4 +1,4 @@
-name: Test Actions - Auto Versioning & Git TAG
+name: Test Multi Projects Nugets - AutoVersioning & Git TAG
 
 on:
   push:
@@ -30,11 +30,17 @@ jobs:
         run: msbuild TestLib.sln /p:Configuration=Release /p:Version=${{ env.VERSION }}
 
       # Pack each project
-      - name: Pack TestLib
-        run: nuget pack TestLib\TestLib.csproj -Prop Configuration=Release -Version ${{ env.VERSION }}
+      #- name: Pack TestLib
+      #  run: nuget pack TestLib\TestLib.csproj -Prop Configuration=Release -Version ${{ env.VERSION }}
 
-      - name: Pack TestLib2
-        run: nuget pack TestLib2\TestLib2.csproj -Prop Configuration=Release -Version ${{ env.VERSION }}
+      #- name: Pack TestLib2
+      #  run: nuget pack TestLib2\TestLib2.csproj -Prop Configuration=Release -Version ${{ env.VERSION }}
+
+      - name: Pack all .csproj files
+        run: |
+          Get-ChildItem -Recurse -Filter *.csproj | ForEach-Object {
+            nuget pack $_.FullName -Prop Configuration=Release -Version ${{ env.VERSION }}
+          }
       
       - name: Create NuGet.config for GitHub Packages
         run: |
@@ -59,7 +65,7 @@ jobs:
 
       - name: Create Git tag
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "hany.fayez"
+          git config user.email "hany.fayez@sys-datgroup.com"
           git tag v${{ env.VERSION }}
           git push origin v${{ env.VERSION }}
