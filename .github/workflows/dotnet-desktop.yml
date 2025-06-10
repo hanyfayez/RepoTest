@@ -1,4 +1,4 @@
-name: New BUILD -- Auto Versioning & Git TAG
+name: Test Actions - Auto Versioning & Git TAG
 
 on:
   push:
